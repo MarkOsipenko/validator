@@ -3,9 +3,14 @@ require './validator.rb'
 class User
   include Validator
 
+  validate(:name, presence: true)
+
   def initialize(attrs)
     initialize_permitted_attributes(attrs)
+    validate_attributes
+  end
 
+  def validate_attributes
   end
 
   private
