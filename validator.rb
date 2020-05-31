@@ -17,8 +17,7 @@ module Validator
     self
   end
 
-  # -------validation methods--------------------------------------
-  #  name_of_validation(field, condition)
+  # ------- validation methods --------------------------------------
 
   def presence(attr, bool)
     if bool && send(attr) == ('' || ' ')
@@ -28,16 +27,6 @@ module Validator
   end
 
   # ---------------------------------------------------------------
-
-  def validate_attributes
-    list_of_validations.each { |f| send(f) }
-  end
-
-  def validate_attributes!
-    validate_attributes
-
-    raise StandardError.new errors if invalid?
-  end
 
   def invalid?
     @invalid
@@ -52,6 +41,16 @@ module Validator
   end
 
   private
+
+  def validate_attributes
+    list_of_validations.each { |f| send(f) }
+  end
+
+  def validate_attributes!
+    validate_attributes
+
+    raise StandardError.new errors if invalid?
+  end
 
   def errors_add(attr, option)
     errors << { "#{attr}" => errors_list[option] }

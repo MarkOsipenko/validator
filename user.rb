@@ -20,6 +20,6 @@ class User
   end
 
   def permitted_attributes
-    [:first_name, :last_name, :age]
+    [:first_name, :last_name, :number]
   end
 end
