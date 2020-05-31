@@ -7,9 +7,6 @@ class User
 
   def initialize(attrs)
     initialize_permitted_attributes(attrs)
-  end
-
-  def validate
     validate_attributes
   end
 
@@ -21,10 +18,6 @@ class User
 
       define_singleton_method(key) { instance_variable_get("@#{key}")}
     end
-  end
-
-  def validate_attributes
-    list_of_validations.each { |f| send(f) }
   end
 
   def permitted_attributes
