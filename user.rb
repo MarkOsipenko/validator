@@ -3,7 +3,7 @@ require './validator.rb'
 class User
   include Validator
 
-  validate(:name, presence: true)
+  validate :first_name, presence: true
 
   def initialize(attrs)
     initialize_permitted_attributes(attrs)
@@ -25,4 +25,9 @@ class User
   def permitted_attributes
     [:first_name, :last_name, :age]
   end
+
+  def list_of_validations
+    (User.methods - Object.methods).grep("/validation")
+  end
+
 end
