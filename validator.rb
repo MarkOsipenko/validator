@@ -5,7 +5,31 @@ module Validator
     base.extend(ValidateHandler)
   end
 
+  def presence(attr, bool)
+    if bool
+      invalid = true if attr == ('' || ' ' || nil)
+    end
+  end
+
+  def invalid=(bool)
+    @invalid
+  end
+
+  def invalid
+    @invalid
+  end
+
+  def invalid?
+    @invalid
+  end
+
   def valid?
-    true
+    !invalid
+  end
+
+  private
+
+  def list_of_validations
+    (methods - Object.methods).grep("/validation")
   end
 end

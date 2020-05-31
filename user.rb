@@ -7,10 +7,10 @@ class User
 
   def initialize(attrs)
     initialize_permitted_attributes(attrs)
-    validate_attributes
   end
 
-  def validate_attributes
+  def validate
+    validate_attributes
   end
 
   private
@@ -22,12 +22,11 @@ class User
     end
   end
 
+  def validate_attributes
+    list_of_validations.each { |f| send(f) }
+  end
+
   def permitted_attributes
     [:first_name, :last_name, :age]
   end
-
-  def list_of_validations
-    (User.methods - Object.methods).grep("/validation")
-  end
-
 end
