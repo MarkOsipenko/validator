@@ -5,11 +5,23 @@ module Validator
     base.extend(ValidateHandler)
   end
 
+  def validate
+    validate_attributes
+
+    self
+  end
+
+  def validate!
+    validate_attributes!
+
+    self
+  end
+
   # -------validation methods--------------------------------------
   #  name_of_validation(field, condition)
 
   def presence(attr, bool)
-    if bool && send(attr) == ('' || ' ' || nil)
+    if bool && send(attr) == ('' || ' ')
       @invalid = true
       errors_add(attr, :presence)
     end
@@ -21,24 +33,18 @@ module Validator
     list_of_validations.each { |f| send(f) }
   end
 
-  def invalid
-    @invalid
+  def validate_attributes!
+    validate_attributes
+
+    raise StandardError.new errors if invalid?
   end
 
   def invalid?
     @invalid
   end
 
-  def valid
-    !invalid
-  end
-
   def valid?
-    valid
-  end
-
-  def errors_add(attr, option)
-    errors << { "#{attr}" => errors_list[option] }
+    !invalid?
   end
 
   def errors
@@ -46,6 +52,10 @@ module Validator
   end
 
   private
+
+  def errors_add(attr, option)
+    errors << { "#{attr}" => errors_list[option] }
+  end
 
   def list_of_validations
     (methods - Object.methods).grep(/validation_/)

@@ -7,7 +7,6 @@ class User
 
   def initialize(attrs)
     initialize_permitted_attributes(attrs)
-    validate_attributes
   end
 
   private
