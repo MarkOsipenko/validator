@@ -49,7 +49,7 @@ module Validator
   def validate_attributes!
     validate_attributes
 
-    raise StandardError.new errors if invalid?
+    raise StandardError.new errors.first if invalid?
   end
 
   def errors_add(attr, option)
@@ -62,7 +62,7 @@ module Validator
 
   def errors_list
     {
-      presence: "Field should contain at least one character"
+      presence: 'Field should contain at least one character'
     }
   end
 end
