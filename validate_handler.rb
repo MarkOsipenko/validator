@@ -5,8 +5,9 @@ module ValidateHandler
 
   def validate(attr, options)
     options.keys.each do |key|
-      validation_name(attr, key)
-      define_method(validation_name(attr, key)) do
+      name = validation_name(attr, key)
+
+      define_method(name) do
         send(key, attr, options[key])
       end
     end
