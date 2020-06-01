@@ -5,6 +5,7 @@ class User
 
   validate :first_name, presence: true
   validate :number, format: /[A-Z]{3}/
+  validate :class_type, kind: User
 
   def initialize(attrs)
     initialize_permitted_attributes(attrs)
