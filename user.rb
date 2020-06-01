@@ -4,6 +4,7 @@ class User
   include Validator
 
   validate :first_name, presence: true
+  validate :number, format: /[A-Z]{3}/
 
   def initialize(attrs)
     initialize_permitted_attributes(attrs)
@@ -20,6 +21,6 @@ class User
   end
 
   def permitted_attributes
-    [:first_name, :last_name, :number]
+    [:first_name, :number]
   end
 end

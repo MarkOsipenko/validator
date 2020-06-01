@@ -21,12 +21,29 @@ module Validator
 
   def presence(attr, bool)
     if bool && send(attr) == ('' || ' ')
-      @invalid = true
+      send "invalid=", true
       errors_add(attr, :presence)
     end
   end
 
+  def format(attr, regex)
+    if regex.match?(send(attr))
+      send "invalid=", false
+    else
+      send "invalid=", true
+      errors_add(attr, :format)
+    end
+  end
+
   # ---------------------------------------------------------------
+
+  def invalid=(bool)
+    if bool && invalid?.nil?
+      instance_variable_set(:@invalid, true)
+    elsif !invalid?
+      instance_variable_set(:@invalid, false)
+    end
+  end
 
   def invalid?
     @invalid
@@ -62,7 +79,8 @@ module Validator
 
   def errors_list
     {
-      presence: 'Field should contain at least one character'
+      presence: 'Field should contain at least one character',
+      format: 'Format should be [A-Z]{3}'
     }
   end
 end
